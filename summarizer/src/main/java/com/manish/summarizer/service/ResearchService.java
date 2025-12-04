@@ -67,7 +67,9 @@ public class ResearchService {
         StringBuilder prompt = new StringBuilder();
         switch (request.getOperation()) {
             case "summarize":
-                prompt.append("Summarize the following text: ");
+                prompt.append("Summarize the following text into concise, clear bullet points.\n" +
+                        "Retain only the essential ideas and remove all redundancy.\n" +
+                        "Do not introduce interpretations or assumptions not present in the original text.\n");
                 break;
             case "suggest":
                 prompt.append("Paraphrase the following text: ");

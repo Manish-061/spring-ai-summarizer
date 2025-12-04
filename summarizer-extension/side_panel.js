@@ -48,7 +48,7 @@ async function summarizeText() {
         }
 
         const text = await response.text();
-        showResult(text.replace(/\n/g, '<br>'));
+        showResult(formatText(text));
         showStatus('Summary generated successfully', 'success');
 
     } catch (error) {
@@ -103,6 +103,14 @@ function confirmDeleteNotes() {
             showStatus('Notes deleted successfully', 'success');
         }, 500);
     });
+}
+
+
+function formatText(text) {
+    return text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/^\s*[\*\-]\s/gm, '• ')
+        .replace(/\n/g, '<br>');
 }
 
 
