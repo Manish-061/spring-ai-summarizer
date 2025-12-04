@@ -28,14 +28,13 @@ public class ResearchService {
     public String processContent(ResearchRequest request) {
         String prompt = buildPrompt(request);
 
-        //query the AI model
+        // query the AI model
         Map<String, Object> requestBody = Map.of(
                 "contents", new Object[] {
-                        Map.of("parts", new Object[]{
+                        Map.of("parts", new Object[] {
                                 Map.of("text", prompt)
                         })
-                }
-        );
+                });
         String response = webClient.post()
                 .uri(geminiApiUrl + geminiApiKey)
                 .bodyValue(requestBody)
@@ -47,26 +46,26 @@ public class ResearchService {
     }
 
     private String extractTextFromResponse(String response) {
-        try{
+        try {
             GeminiResponse geminiResponse = new ObjectMapper().readValue(response, GeminiResponse.class);
-            if(geminiResponse.getCandidates() != null && !geminiResponse.getCandidates().isEmpty()){
+            if (geminiResponse.getCandidates() != null && !geminiResponse.getCandidates().isEmpty()) {
                 GeminiResponse.Candidate firstCandidate = geminiResponse.getCandidates().get(0);
-                if(firstCandidate.getContent() != null &&
+                if (firstCandidate.getContent() != null &&
                         firstCandidate.getContent().getParts() != null &&
-                        !firstCandidate.getContent().getParts().isEmpty()){
+                        !firstCandidate.getContent().getParts().isEmpty()) {
                     return firstCandidate.getContent().getParts().get(0).getText();
                 }
             }
             return "No response found.";
-        } catch (Exception e){
+        } catch (Exception e) {
             return "Error parsing response: " + e.getMessage();
         }
     }
 
     // build prompt
-    private String buildPrompt(ResearchRequest request){
+    private String buildPrompt(ResearchRequest request) {
         StringBuilder prompt = new StringBuilder();
-        switch(request.getOperation()){
+        switch (request.getOperation()) {
             case "summarize":
                 prompt.append("Summarize the following text: ");
                 break;
@@ -80,4 +79,3 @@ public class ResearchService {
         return prompt.toString();
     }
 }
- 
