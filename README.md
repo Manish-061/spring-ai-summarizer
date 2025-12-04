@@ -63,7 +63,7 @@ Follow these steps to set up the project locally.
 ### 1. Backend Setup
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/spring-ai-summarizer.git
+    git clone https://github.com/Manish-061/spring-ai-summarizer.git
     cd spring-ai-summarizer/summarizer
     ```
 2.  **Configure API Key**:
